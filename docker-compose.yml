@@ -1,0 +1,11 @@
+services:
+  go:
+    container_name: "go"
+    restart: unless-stopped
+    build:
+      context: go
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
+    volumes:
+      - ./:/usr/src/app:rw
