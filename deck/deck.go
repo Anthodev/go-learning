@@ -27,13 +27,13 @@ func (d deck) print() {
 	}
 }
 
-func newHand() deck {
+func (d deck) newHand() deck {
 	h := deck{}
 	return h
 }
 
-func deal(d deck, h deck, handSize int) (deck, deck) {
-	dmap := map2deck(d)
+func (d deck) deal(h deck, handSize int) (deck, deck) {
+	dmap := d.map2deck()
 
 	for i := 0; i < handSize; i++ {
 		rand.NewSource(time.Now().UnixNano())
@@ -42,12 +42,12 @@ func deal(d deck, h deck, handSize int) (deck, deck) {
 		delete(dmap, item)
 	}
 
-	d = getRemainingDeck(d, dmap)
+	d = getRemainingDeck(dmap)
 
 	return d, h
 }
 
-func map2deck(d deck) map[int]string {
+func (d deck) map2deck() map[int]string {
 	dmap := map[int]string{}
 
 	for i, card := range d {
@@ -57,12 +57,12 @@ func map2deck(d deck) map[int]string {
 	return dmap
 }
 
-func getRemainingDeck(d deck, dmap map[int]string) deck {
-	d = deck{}
+func getRemainingDeck(dmap map[int]string) deck {
+	d2 := deck{}
 
 	for _, card := range dmap {
-		d = append(d, card)
+		d2 = append(d2, card)
 	}
 
-	return d
+	return d2
 }
